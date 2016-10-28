@@ -1,0 +1,37 @@
+term xterm
+maptimeout 5
+# Start message
+ startup_message off
+#
+# # Set hardstatus always on
+ hardstatus alwayslastline " %-Lw%{= Bw}%n%f %t%{-}%+Lw %=| %M %d %0c:%s "
+#
+# # Set default encoding using utf8
+ defutf8 on
+#
+# # Refresh the display when exiting programs
+ altscreen on
+#
+# # Dynamic title
+ shelltitle '$ |bash'
+#
+# # Disable vbell
+ vbell off
+#
+# # Keboard binding
+# # bind F7 to detach screen session (to background)
+ bindkey -k k7 detach
+# # bind F8 to kill current screen window
+ bindkey -k k8 kill
+# # bind F9 to create a new screen
+ bindkey -k k9 screen
+# # bind F10 to rename current screen window
+ bindkey -k k; title
+# # bind F11 to move to previous window
+ bindkey -k F1 prev
+# # bind F12 to move to next window
+ bindkey -k F2 next 
+
+ bindkey "^[s" split
+ bindkey "^[f" focus
+ bindkey "^[q" only
