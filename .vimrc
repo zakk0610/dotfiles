@@ -233,4 +233,4 @@ let g:SuperTabDefaultCompletionType="context"
 let g:completekey="<C-d>"
 
 ":set list listchars=tab:»·,trail:·
-map <f6> :Tlist<CR>
+nnoremap <silent> <F6> :TrinityToggleAll<CR>
