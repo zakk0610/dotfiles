@@ -1,0 +1,108 @@
+set nocompatible              " be iMproved, required
+set history=2000
+set fileencoding=utf-8
+set encoding=utf-8
+set t_Co=256
+syntax on
+filetype off                  " required
+
+set statusline=[%n]\ %<%f\ %((%1*%M%*%R%Y)%)\ %=%-19(\LINE\ [%3l/%3L]\ COL\ [%02c%03V]%)\ ascii['%02b']\ %P
+
+highlight RedundantSpaces ctermbg=red guibg=red
+match RedundantSpaces /\s\+$\| \+\ze\t\|\t/
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+" alternatively, pass a path where Vundle should install plugins
+"let path = '~/some/path/here'
+"call vundle#rc(path)
+
+" let Vundle manage Vundle, required
+Plugin 'gmarik/vundle'
+
+" The following are examples of different formats supported.
+" Keep Plugin commands between here and filetype plugin indent on.
+" scripts on GitHub repos
+Plugin 'tpope/vim-fugitive'
+Plugin 'Lokaltog/vim-easymotion'
+Plugin 'tpope/vim-rails.git'
+" The sparkup vim script is in a subdirectory of this repo called vim.
+" Pass the path to set the runtimepath properly.
+Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+" scripts from http://vim-scripts.org/vim/scripts.html
+Plugin 'L9'
+Plugin 'FuzzyFinder'
+Plugin 'git://github.com/scrooloose/nerdtree.git'
+" scripts not on GitHub
+Plugin 'git://git.wincent.com/command-t.git'
+
+Plugin 'tell-k/vim-autopep8'
+" ...
+
+filetype plugin indent on     " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Brief help
+" :PluginList          - list configured plugins
+" :PluginInstall(!)    - install (update) plugins
+" :PluginSearch(!) foo - search (or refresh cache first) for foo
+" :PluginClean(!)      - confirm (or auto-approve) removal of unused plugins
+"
+" see :h vundle for more details or wiki for FAQ
+" NOTE: comments after Plugin commands are not allowed.
+" Put your stuff after this line
+
+map <C-K> :py3f /home/zakkc/clang+llvm-9.0.0-x86_64-linux-gnu-ubuntu-16.04/share/clang/clang-format.py<cr>
+imap <C-K> <c-o>:py3f /home/zakkc/clang+llvm-9.0.0-x86_64-linux-gnu-ubuntu-16.04/share/clang/clang-format.py<cr>
+
+map <C-P> :Autopep8<cr>
+imap <C-P> <c-o>:Autopep8<cr>
+
+
+map <Esc>OP <F1>
+map <Esc>OQ <F2>
+map <Esc>OR <F3>
+map <Esc>OS <F4>
+
+map <F2> :NERDTreeToggle<CR>
+map <F3> :TlistToggle<CR>
+let g:NERDTreeQuitOnOpen=1
+set guitablabel=%t
+
+let g:autopep8_indent_size=2
+let g:autopep8_disable_show_diff=1
+set nu
+set hlsearch
+
+augroup filetype
+  au! BufRead,BufNewFile *.jcs		set filetype=c
+  au! BufRead,BufNewFile *.ll		set filetype=llvm
+  au! BufRead,BufNewFile *.llx		set filetype=llvm
+  au! BufRead,BufNewFile *.td		set filetype=tablegen
+  au! BufRead,BufNewFile *Makefile*	set filetype=make
+  au! BufRead,BufNewFile *.cl set filetype=c
+  au BufNewFile,BufRead *.md set filetype=lisp
+augroup END
+
+hi Visual term=reverse cterm=reverse guibg=Grey
+
+if &diff
+    colorscheme mycolorsheme
+endif
+
+set cursorline
+set cursorcolumn
+set hlsearch
+
+
+fun! ShowFuncName()
+  let lnum = line(".")
+  let col = col(".")
+  echohl ModeMsg
+  echo getline(search("^[^ \t#/]\\{2}.*[^:]\s*$", 'bW'))
+  echohl None
+  call search("\\%" . lnum . "l" . "\\%" . col . "c")
+endfun
+map f :call ShowFuncName() <CR>
